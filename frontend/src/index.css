@@ -1,0 +1,9 @@
+.hover-row:hover td {
+  background: #f3f6ff !important;
+}
+
+.table thead th {
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+}

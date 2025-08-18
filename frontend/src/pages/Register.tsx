@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -14,41 +14,61 @@ export default function Register() {
       await api.post("/auth/register", form);
       navigate("/login");
     } catch (err: any) {
-      setError(err.response?.data?.error || "Registration failed");
+      if (err.response && err.response.status === 400) {
+        setError("⚠️ Email already registered");
+      } else {
+        setError("⚠️ Something went wrong, try again!");
+      }
     }
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-      <div className="card shadow-lg p-4" style={{ width: 480 }}>
-        <h3 className="text-center text-success mb-3">📝 Register</h3>
-        {error && <div className="alert alert-danger">{error}</div>}
+    <div className="d-flex align-items-center justify-content-center vh-100 bg-light">
+      <div className="card shadow p-4" style={{ maxWidth: 400, width: "100%" }}>
+        <h4 className="mb-3">Register</h4>
+
+        
+        {error && (
+          <div className="alert alert-danger py-2">{error}</div>
+        )}
+
         <form onSubmit={submit}>
           <input
             className="form-control mb-3"
-            placeholder="Full Name"
+            placeholder="Name"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
             required
           />
           <input
-            type="email"
             className="form-control mb-3"
             placeholder="Email"
+            type="email"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             required
           />
           <input
-            type="password"
             className="form-control mb-3"
             placeholder="Password"
+            type="password"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             required
           />
-          <button className="btn btn-success w-100">Register</button>
+          <button className="btn btn-primary w-100">Register</button>
         </form>
+
+        <div className="text-center mt-3">
+          <span className="text-muted">Already have an account?</span>
+          <button
+            className="btn btn-link p-0 ms-2"
+            type="button"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </button>
+        </div>
       </div>
     </div>
   );
