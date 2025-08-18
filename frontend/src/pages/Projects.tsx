@@ -20,7 +20,7 @@ export default function Projects() {
   const [form, setForm] = useState({
     name: "",
     description: "",
-    teamMembers: [] as string[],
+    teamMembers: [] as string[], 
   });
 
   const load = async () => {
@@ -28,15 +28,17 @@ export default function Projects() {
     setProjects(res.data.projects || []);
     setTotal(res.data.total || 0);
 
-    // teams for multi-select
-    const t = await api.get("/teams", { params: { page: 1, limit: 100 } });
-    setTeams(t.data.teams || []);
+    if (teams.length === 0) {
+      const t = await api.get("/teams", { params: { page: 1, limit: 100 } });
+      setTeams(t.data.teams || []);
+    }
   };
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [filters]);
+
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,6 +51,7 @@ export default function Projects() {
     load();
   };
 
+  
   const edit = (p: Project) => {
     setEditingId(p._id);
     setForm({
@@ -58,24 +61,26 @@ export default function Projects() {
     });
   };
 
+  
   const remove = async (id: string) => {
     if (!window.confirm("Delete this project?")) return;
     await api.delete(`/projects/${id}`);
     load();
   };
 
+ 
   const resetForm = () => {
     setEditingId(null);
     setForm({ name: "", description: "", teamMembers: [] });
   };
 
+  
   const changePage = (dir: number) => {
     setFilters((f) => ({ ...f, page: f.page + dir }));
   };
 
   return (
     <Layout>
-      {/* local styles for rounded table rows */}
       <style>{`
         .rounded-table { border-collapse: separate; border-spacing: 0 10px; }
         .rounded-table thead th { background:#f7f8fa; font-weight:600; color:#495057; padding:12px }
@@ -86,7 +91,7 @@ export default function Projects() {
       `}</style>
 
       <div className="row g-4">
-        {/* Left: form */}
+       
         <div className="col-lg-4">
           <div className="card shadow-sm">
             <div className="card-header bg-white fw-semibold">
@@ -105,7 +110,9 @@ export default function Projects() {
                   className="form-control"
                   placeholder="Description"
                   value={form.description}
-                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, description: e.target.value })
+                  }
                   required
                 />
                 <div>
@@ -115,7 +122,9 @@ export default function Projects() {
                     multiple
                     value={form.teamMembers}
                     onChange={(e) => {
-                      const vals = Array.from(e.target.selectedOptions).map((o) => o.value);
+                      const vals = Array.from(e.target.selectedOptions).map(
+                        (o) => o.value
+                      );
                       setForm({ ...form, teamMembers: vals });
                     }}
                     style={{ minHeight: 120 }}
@@ -146,7 +155,7 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* Right: table */}
+        
         <div className="col-lg-8">
           <div className="card shadow-sm">
             <div className="card-header bg-white fw-semibold">Projects</div>
@@ -169,15 +178,23 @@ export default function Projects() {
                         <td>
                           <div className="d-flex flex-wrap gap-2">
                             {(p.teamMembers || []).map((m) => (
-                              <span className="chip" key={m._id}>{m.name}</span>
+                              <span className="chip" key={m._id}>
+                                {m.name}
+                              </span>
                             ))}
                           </div>
                         </td>
                         <td>
-                          <button className="btn btn-sm btn-outline-primary me-2" onClick={() => edit(p)}>
+                          <button
+                            className="btn btn-sm btn-outline-primary me-2"
+                            onClick={() => edit(p)}
+                          >
                             ✏️
                           </button>
-                          <button className="btn btn-sm btn-outline-danger" onClick={() => remove(p._id)}>
+                          <button
+                            className="btn btn-sm btn-outline-danger"
+                            onClick={() => remove(p._id)}
+                          >
                             🗑️
                           </button>
                         </td>
@@ -194,11 +211,19 @@ export default function Projects() {
                 </table>
               </div>
 
-              {/* Pagination */}
+              
               <nav>
                 <ul className="pagination justify-content-center">
-                  <li className={`page-item ${filters.page === 1 ? "disabled" : ""}`}>
-                    <button className="page-link" onClick={() => changePage(-1)}>
+                  <li
+                    className={`page-item ${
+                      filters.page === 1 ? "disabled" : ""
+                    }`}
+                  >
+                    <button
+                      className="page-link"
+                      onClick={() => changePage(-1)}
+                      disabled={filters.page === 1}
+                    >
                       Previous
                     </button>
                   </li>
@@ -210,7 +235,11 @@ export default function Projects() {
                       filters.page * filters.limit >= total ? "disabled" : ""
                     }`}
                   >
-                    <button className="page-link" onClick={() => changePage(1)}>
+                    <button
+                      className="page-link"
+                      onClick={() => changePage(1)}
+                      disabled={filters.page * filters.limit >= total}
+                    >
                       Next
                     </button>
                   </li>

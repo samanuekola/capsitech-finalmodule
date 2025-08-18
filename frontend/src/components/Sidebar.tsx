@@ -4,8 +4,8 @@ export default function Sidebar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // clear auth token
-    navigate("/login"); // redirect to login
+    localStorage.removeItem("token"); 
+    navigate("/login"); 
   };
 
   return (
@@ -13,7 +13,7 @@ export default function Sidebar() {
       className="d-flex flex-column bg-light vh-100 border-end"
       style={{ width: "240px" }}
     >
-      {/* Sidebar Links */}
+      
       <div className="flex-grow-1">
         <h4 className="p-3 text-primary">Dashboard</h4>
         <ul className="nav flex-column px-3">
@@ -36,7 +36,7 @@ export default function Sidebar() {
         </ul>
       </div>
 
-      {/* Logout at Bottom */}
+      
       <div className="p-3 border-top">
         <button
           onClick={handleLogout}

@@ -55,7 +55,7 @@ export default function Tasks() {
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [filters]);
 
   const submit = async (e: React.FormEvent) => {
@@ -108,7 +108,7 @@ export default function Tasks() {
 
   return (
     <Layout>
-      {/* local styles for rounded table rows */}
+      
       <style>{`
         .rounded-table { border-collapse: separate; border-spacing: 0 10px; }
         .rounded-table thead th { background:#f7f8fa; font-weight:600; color:#495057; padding:12px }
@@ -119,7 +119,7 @@ export default function Tasks() {
       `}</style>
 
       <div className="row g-4">
-        {/* Left: form */}
+        
         <div className="col-lg-4">
           <div className="card shadow-sm">
             <div className="card-header bg-white fw-semibold">
@@ -214,13 +214,13 @@ export default function Tasks() {
           </div>
         </div>
 
-        {/* Right: filters + table */}
+        
         <div className="col-lg-8">
           <div className="card shadow-sm">
             <div className="card-header bg-white fw-semibold">Tasks</div>
             <div className="card-body">
 
-              {/* Filters */}
+              
               <div className="row g-2 align-items-end mb-3">
                 <div className="col-12 col-md-4">
                   <label className="form-label small text-muted">Search</label>
@@ -352,7 +352,7 @@ export default function Tasks() {
                 </table>
               </div>
 
-              {/* Pagination */}
+              
               <nav>
                 <ul className="pagination justify-content-center">
                   <li className={`page-item ${filters.page === 1 ? "disabled" : ""}`}>

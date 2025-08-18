@@ -54,7 +54,7 @@ export default function Teams() {
   return (
     <Layout>
       <div className="row g-4">
-        {/* Left form */}
+        
         <div className="col-lg-4">
           <div className="card shadow-sm">
             <div className="card-header bg-white fw-semibold">Create Project</div>
@@ -102,7 +102,7 @@ export default function Teams() {
           </div>
         </div>
 
-        {/* Right table */}
+        
         <div className="col-lg-8">
           <div className="card shadow-sm">
             <div className="card-header bg-light fw-bold">Team Members</div>

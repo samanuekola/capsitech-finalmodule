@@ -5,7 +5,7 @@ import Teams from "./pages/Teams";
 import Projects from "./pages/Projects";
 import Tasks from "./pages/Tasks";
 
-// Fake Auth Check (replace with real auth logic)
+
 const isAuthenticated = () => {
   return !!localStorage.getItem("token");
 };
@@ -20,11 +20,11 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 export default function App() {
   return (
     <Routes>
-      {/* Public Routes */}
+      
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* Protected Routes */}
+      
       <Route
         path="/teams"
         element={
@@ -50,7 +50,7 @@ export default function App() {
         }
       />
 
-      {/* Default redirect */}
+      
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );

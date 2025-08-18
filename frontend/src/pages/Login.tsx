@@ -24,6 +24,7 @@ export default function Login() {
             type="email"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
+            required
           />
           <input
             className="form-control mb-3"
@@ -31,9 +32,22 @@ export default function Login() {
             type="password"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
+            required
           />
           <button className="btn btn-primary w-100">Login</button>
         </form>
+
+       
+        <div className="text-center mt-3">
+          <span className="text-muted">Don't have an account?</span>
+          <button
+            className="btn btn-link p-0 ms-2"
+            type="button"
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </button>
+        </div>
       </div>
     </div>
   );
