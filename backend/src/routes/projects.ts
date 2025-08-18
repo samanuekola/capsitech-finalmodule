@@ -4,13 +4,13 @@ import auth from "../middleware/auth";
 
 const router = Router();
 
-// ✅ Helper to ensure teamMembers is always an array
+
 function normalizeTeamMembers(teamMembers: any) {
   if (!teamMembers) return [];
   return Array.isArray(teamMembers) ? teamMembers : [teamMembers];
 }
 
-// Create
+
 router.post("/", auth, async (req, res) => {
   try {
     const { name, description, teamMembers } = req.body;
@@ -28,7 +28,6 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// List
 router.get("/", auth, async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
@@ -45,7 +44,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// Update
+
 router.put("/:id", auth, async (req, res) => {
   try {
     const { name, description, teamMembers } = req.body;
@@ -66,7 +65,7 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-// Delete
+
 router.delete("/:id", auth, async (req, res) => {
   try {
     await Project.findByIdAndDelete(req.params.id);

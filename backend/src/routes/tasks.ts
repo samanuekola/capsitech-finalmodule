@@ -4,14 +4,14 @@ import auth from "../middleware/auth";
 
 const router = Router();
 
-// Create
+
 router.post("/", auth, async (req, res) => {
   const task = new Task(req.body);
   await task.save();
   res.json(task);
 });
 
-// List with filters
+
 router.get("/", auth, async (req, res) => {
   const { page = 1, limit = 10, search, project, status, fromDate, toDate } = req.query;
 
@@ -35,13 +35,12 @@ router.get("/", auth, async (req, res) => {
   res.json({ tasks, total });
 });
 
-// Update
 router.put("/:id", auth, async (req, res) => {
   const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
   res.json(task);
 });
 
-// Delete
+
 router.delete("/:id", auth, async (req, res) => {
   await Task.findByIdAndDelete(req.params.id);
   res.json({ message: "Deleted" });
